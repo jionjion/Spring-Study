@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd">
+
+
+    <!-- 配置一个 bean -->
+    <!-- 通过属性注入: 通过 setter 方法注入属性值 -->
+    <bean id="userA" class="xml.ioc.UserA">
+        <!-- 为属性赋值 -->
+        <property name="name" value="Jion"/>
+    </bean>
+
+    <bean id="userA2" class="xml.ioc.UserA">
+        <!-- 若某一个 bean 的属性值不是 null, 使用时需要为其设置为 null -->
+        <property name="name">
+            <null/>
+        </property>
+    </bean>
+
+    <!-- 通过构造器注入属性值 -->
+    <bean id="userB" class="xml.ioc.UserB">
+        <!-- 要求: 在 bean 中必须有对应的构造器.  -->
+        <constructor-arg value="Jion"/>
+    </bean>
+
+    <!-- 若一个 bean 有多个构造器,可以根据 index 和 value 进行更加精确的定位. -->
+    <bean id="userC" class="xml.ioc.UserC">
+        <constructor-arg value="Jion" index="0"/>
+        <constructor-arg value="上海" index="1"/>
+        <constructor-arg value="25" type="java.lang.Integer"/>
+    </bean>
+
+    <!-- 对于有特殊字符的值注入注入 -->
+    <bean id="userC2" class="xml.ioc.UserC">
+        <constructor-arg value="Jion"/>
+        <constructor-arg>
+            <value><![CDATA[<上海 QvQ>]]></value>
+        </constructor-arg>
+    </bean>
+
+
+    <!-- p标签的引用 -->
+    <bean id="userD-name" class="java.lang.String">
+        <constructor-arg>
+            <value><![CDATA[<JionJion>]]></value>
+        </constructor-arg>
+    </bean>
+    <!--  p:name 直接为属性赋值 p:age-ref 为属性引用对象  -->
+    <bean id="userD" class="xml.ioc.UserD" p:name-ref="userD-name" p:address="HeNan" p:age="25" />
+
+
+    <!-- bean 的配置,使用 parent 来完成继承,可以重写属性; depends-on 表示对象间依赖 -->
+    <bean id="userD2" parent="userD" p:age="24" depends-on="userD"/>
+
+    <!-- 使用SpEL表达式,属性须提供Getter方法,或者为公有 -->
+    <bean id="userD3" class="xml.ioc.UserD">
+        <property name="name" value="#{userD.name}"/>
+        <property name="address" value="#{userD.address.toUpperCase()}"/>
+        <property name="age" value="#{userD.age + 10}"/>
+    </bean>
+
+    <!-- 使用静态工厂方法,配置一个Bean -->
+    <!-- 在 class 中指定静态工厂方法的全类名, 在 factory-method 中指定静态工厂方法的方法名 -->
+    <bean id="userE" class="xml.ioc.StaticUserFactory" factory-method="getUserEInstance">
+        <!-- 可以通过 constructor-arg 子节点为静态工厂方法指定参数 -->
+        <constructor-arg value="Jion"/>
+    </bean>
+
+
+    <!-- 2. 实例工厂方法: 先需要创建工厂对象, 再调用工厂的非静态方法返回实例(了解) -->
+    <bean id="instanceUserFactory" class="xml.ioc.InstanceUserFactory"/>
+
+    <!-- ②. 有实例工厂方法来创建 bean 实例 -->
+    <!-- factory-bean 指向工厂 bean, factory-method 指定工厂方法(了解) -->
+    <bean id="userE2" factory-bean="instanceUserFactory" factory-method="getUserEInstance">
+        <!-- 通过 constructor-arg 执行调用工厂方法需要传入的参数 -->
+        <constructor-arg value="Jion"/>
+    </bean>
+
+    <!-- 配置通过 FactoryBean 的方式来创建 bean 的实例 -->
+    <bean id="userE3" class="xml.ioc.UserFactoryBean"/>
+
+
+</beans>

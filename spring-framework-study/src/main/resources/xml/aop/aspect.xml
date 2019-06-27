@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!-- 使用 Aspect 完成AOP编程 -->
+
+    <!-- 配置 bean, 被代理类 -->
+    <bean id="calculator" class="xml.aop.aspect.CalculatorImpl"/>
+
+    <!-- 配置切面的 bean, 定义了各种切面方法 -->
+    <bean id="loggingAspect" class="xml.aop.aspect.LoggingAspect"/>
+
+    <!-- 配置 AOP -->
+    <aop:config>
+
+        <!-- 切点表达式, 执行 xml.aop.aspect.Calculator 类的任意方法,(参数列表为 int, int),任意返回值的方法时 -->
+        <aop:pointcut id="pointcut" expression="execution(* xml.aop.aspect.Calculator.*(int, int))"/>
+
+        <!-- 配置切面及切面的执行顺序,各种通知及通知的返回值  -->
+        <aop:aspect ref="loggingAspect" order="1">
+            <!-- 前置通知 -->
+            <aop:before method="beforeMethod" pointcut-ref="pointcut"/>
+            <!-- 返回通知 -->
+            <aop:after-returning method="afterReturning" pointcut-ref="pointcut" returning="result"/>
+            <!-- 后置通知 -->
+            <aop:after method="afterMethod" pointcut-ref="pointcut"/>
+            <!-- 异常通知 -->
+            <aop:after-throwing method="afterThrowing" pointcut-ref="pointcut" throwing="e"/>
+            <!-- 环绕通知 -->
+            <aop:around method="aroundMethod" pointcut-ref="pointcut"/>
+        </aop:aspect>
+    </aop:config>
+
+</beans>

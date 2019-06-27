@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+
+    <!-- 资源文件位置 -->
+    <context:property-placeholder file-encoding="UTF-8" location="classpath:xml/aware/config.properties"/>
+
+    <bean id="dataSource" class="xml.aware.DataSource">
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${password}"/>
+        <property name="url" value="${url}"/>
+    </bean>
+
+
+    <!-- 通过aware接口,获得容器上下文 -->
+    <bean id="applicationContext" class="xml.aware.AwareApplicationContext"/>
+
+    <!-- 通过aware接口,获得容器中自己Bean的名字 -->
+    <bean id="awareBeanName" class="xml.aware.AwareBeanName"/>
+</beans>

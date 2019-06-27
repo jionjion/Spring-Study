@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+default-autowire="no">
+
+
+    <!-- 接口与接口类之间指定实现装配 -->
+    <bean id="dao" class="xml.autoWiring.DaoImpl"/>
+
+    <!-- 依赖Bean -->
+    <bean id="service" class="xml.autoWiring.Service"/>
+
+    <!-- 通过构造器自动注入 -->
+    <bean id="collection" class="xml.autoWiring.Collection" autowire="constructor"/>
+
+    <!-- 通过Setter属性自动注入 -->
+    <bean id="collection2" class="xml.autoWiring.Collection" autowire="byName"/>
+
+    <!-- 通过类型自动注入 -->
+    <bean id="collection3" class="xml.autoWiring.Collection" autowire="byType"/>
+
+</beans>

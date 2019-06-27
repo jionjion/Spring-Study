@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd">
+
+
+    <!-- 配置依赖 -->
+    <bean id="dao" class="xml.di.Dao">
+        <property name="ip" value="127.0.0.1"/>
+    </bean>
+
+    <!-- 引用依赖 -->
+    <bean id="service" class="xml.di.Service">
+        <!-- 通过 ref 属性值指定当前属性指向哪一个 bean! -->
+        <property name="dao" ref="dao"/>
+    </bean>
+
+    <!-- 声明使用内部 bean -->
+    <bean id="service2" class="xml.di.Service">
+        <property name="dao">
+            <!-- 内部 bean, 类似于匿名内部类对象. 不能被外部的 bean 来引用, 也没有必要设置 id 属性 -->
+            <bean class="xml.di.Dao">
+                <property name="ip" value="127.0.0.1"/>
+            </bean>
+        </property>
+    </bean>
+
+
+    <!-- 装配集合属性 -->
+    <bean id="collection" class="xml.di.Collection">
+        <property name="uri" value="127.0.0.1"/>
+        <property name="services">
+            <!-- 使用 list 元素来装配集合属性 -->
+            <list>
+                <ref bean="service"/>
+                <ref bean="service2"/>
+            </list>
+        </property>
+    </bean>
+
+    <!-- 声明集合类型的 bean -->
+    <util:list id="services">
+        <ref bean="service"/>
+        <ref bean="service2"/>
+    </util:list>
+    <!-- 引入集合类型的 bean -->
+    <bean id="collection2" class="xml.di.Collection">
+        <property name="uri" value="127.0.0.1"/>
+        <!-- 引用外部声明的 list -->
+        <property name="services" ref="services"/>
+    </bean>
+
+
+
+
+</beans>
