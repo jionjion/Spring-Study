@@ -8,7 +8,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  */
 public class CollectionTest {
 
-
     @Test
     public void testCollection(){
         ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("xml/autoWiring/autoWiring.xml");

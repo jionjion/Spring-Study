@@ -2,7 +2,7 @@ package xml.aware;
 
 /**
  * @author Jion
- *  测试通过属性文件获得属性
+ * 测试通过属性文件获得属性
  */
 public class DataSource {
 

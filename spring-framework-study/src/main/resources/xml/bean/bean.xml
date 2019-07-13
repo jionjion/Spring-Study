@@ -5,7 +5,6 @@
     default-init-method="defaultInit"
     default-destroy-method="defaultDestroy"
 >
-    <!-- 自定义的Bean的全局生命周期方法 -->
 
     <!-- Bean的作用范围 -->
     <bean id="beanScope" class="xml.bean.BeanScope" scope="prototype">
@@ -16,7 +15,7 @@
     <!-- Bean的生命周期,在Bean中配置初始化方法,执行顺序在初始化/销毁接口的实现方法之后 -->
     <bean id="beanLifeCycle" class="xml.bean.BeanLifeCycle" init-method="start" destroy-method="stop"/>
 
-    <!-- 配置 bean 后置处理器: 不需要配置 id 属性, IOC 容器会识别到他是一个 bean 后置处理器, 并调用其方法,为当前容器中的每一个Bean做处理 -->
+    <!-- 配置 bean 后置处理器: 不需要配置 id 属性, ioc 容器会识别到他是一个 bean 后置处理器, 并调用其方法,为当前容器中的每一个Bean做处理 -->
     <bean class="xml.bean.BeanPostProcessorImpl"/>
 
 </beans>

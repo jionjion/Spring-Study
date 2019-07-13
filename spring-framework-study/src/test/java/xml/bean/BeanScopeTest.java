@@ -19,5 +19,4 @@ public class BeanScopeTest {
         System.out.println(beanScope1.hashCode());
         System.out.println(beanScope2.hashCode());
     }
-
 }

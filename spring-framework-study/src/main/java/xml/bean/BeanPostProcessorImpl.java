@@ -13,7 +13,7 @@ public class BeanPostProcessorImpl implements BeanPostProcessor {
     /** 在Bean初始化前执行,各种初始化的最先执行 */
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
-        // 仅针对某些Bean作拦截 BeanLifeCycle
+        // 仅针对某些Bean作拦截 BeanLifeCycleB
         if ("beanLifeCycle".equals(beanName)){
             System.out.println("Bean beanLifeCycle 初始化前执行");
         }
@@ -23,7 +23,7 @@ public class BeanPostProcessorImpl implements BeanPostProcessor {
     /** 在Bean初始化之后执行,各种初始化的最后执行 */
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
-        // 仅针对某些Bean作拦截 BeanLifeCycle
+        // 仅针对某些Bean作拦截 BeanLifeCycleB
         if ("beanLifeCycle".equals(beanName)){
             System.out.println("Bean beanLifeCycle 初始化后执行");
         }

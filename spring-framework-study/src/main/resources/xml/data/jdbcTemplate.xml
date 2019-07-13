@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <!-- 使用 JDBCTemplate 进行数据库操作 -->
-
 
     <!-- 数据源 -->
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
@@ -30,4 +29,34 @@
     <bean id="service" class="xml.data.jdbcTemplate.Service">
         <property name="dao" ref="dao"/>
     </bean>
+
+    <!-- 事物配置 -->
+    <!-- 1. 配置事务管理器,各种 XXXXTransactionManager -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!-- 2. 配置事务属性,默认使用当前唯一的事物管理器 -->
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <!-- 根据方法名指定事务的属性
+                    name            方法名,或者方法签名
+                    isolation       事物隔离级别
+                    propagation     事物传播行为
+                    timeout         执行超时时间
+             -->
+            <tx:method name="save*" propagation="REQUIRES_NEW"/>
+            <tx:method name="find*" read-only="true" timeout="5"/>
+            <tx:method name="delete*" propagation="REQUIRED" />
+            <tx:method name="*"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <!-- 3. 配置事务切入点, 以及把事务切入点和事务属性关联起来 -->
+    <aop:config>
+        <!-- 切点 执行 xml.data.jdbcTemplate.Service 包下的所有类的所有方法,参数列表不作限制.返回值不作限制 -->
+        <aop:pointcut id="txPointCut" expression="execution(* xml.data.jdbcTemplate.Service.*.*(..))"/>
+        <!-- 通知,将切点与事物管理器关联 -->
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="txPointCut"/>
+    </aop:config>
 </beans>

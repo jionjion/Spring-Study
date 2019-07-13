@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/bcalculatoreans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 通知,创建实现接口的通知类 -->
+    <bean id="beforeAdvice" class="xml.aop.api.CalculatorMethodBeforeAdvice"/>
+    <bean id="returningAdvice" class="xml.aop.api.CalculatorAfterReturningAdvice"/>
+    <bean id="throwsAdvice" class="xml.aop.api.CalculatorThrowsAdvice"/>
+
+    <!-- 目标类 -->
+    <bean id="calculator" class="xml.aop.api.CalculatorImpl"/>
+
+    <bean id="calculatorProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <!-- 指定代理的接口 -->
+        <property name="proxyInterfaces" value="xml.aop.api.Calculator" />
+        <!-- 要代理的类 -->
+        <property name="target" ref="calculator"/>
+        <!-- 通知 -->
+        <property name="interceptorNames">
+            <list>
+                <value>beforeAdvice</value>
+                <value>returningAdvice</value>
+                <value>throwsAdvice</value>
+            </list>
+        </property>
+    </bean>
+</beans>

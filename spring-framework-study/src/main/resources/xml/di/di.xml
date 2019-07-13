@@ -49,8 +49,4 @@
         <!-- 引用外部声明的 list -->
         <property name="services" ref="services"/>
     </bean>
-
-
-
-
 </beans>

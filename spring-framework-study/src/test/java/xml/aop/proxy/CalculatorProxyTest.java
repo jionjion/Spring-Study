@@ -7,8 +7,6 @@ import org.junit.Test;
  *  代理类的测试
  */
 public class CalculatorProxyTest {
-
-
     /** 测试代理类的除法 */
     @Test
     public void testDiv(){

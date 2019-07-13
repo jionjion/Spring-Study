@@ -17,5 +17,4 @@ public class UserFactoryBeanTest {
         UserE userE = (UserE) ctx.getBean("userE3");
         System.out.println(userE);
     }
-
 }

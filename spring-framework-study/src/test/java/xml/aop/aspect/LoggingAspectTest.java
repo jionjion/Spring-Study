@@ -8,8 +8,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  *  测试通知方法
  */
 public class LoggingAspectTest {
-
-
     @Test
     public void testAspect(){
 

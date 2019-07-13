@@ -24,7 +24,7 @@ public class ServiceTest {
 
     @Test
     public void testFind() {
-        User user = service.find(2);
+        User user = service.find(3);
         System.out.println(user);
     }
 
@@ -37,7 +37,7 @@ public class ServiceTest {
     @Test
     public void testDelete() {
         User user = new User();
-        user.setId(2);
+        user.setId(3);
         service.delete(user);
     }
 }

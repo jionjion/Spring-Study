@@ -16,9 +16,7 @@ public class DataSourceTest {
     public void testDataSource(){
         ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("xml/aware/aware.xml");
         DataSource dataSource = ctx.getBean(DataSource.class);
-
         // 查看属性
         System.out.println(dataSource);
     }
-
 }

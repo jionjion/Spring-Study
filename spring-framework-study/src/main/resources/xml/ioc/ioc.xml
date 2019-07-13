@@ -63,7 +63,7 @@
 
     <!-- 使用静态工厂方法,配置一个Bean -->
     <!-- 在 class 中指定静态工厂方法的全类名, 在 factory-method 中指定静态工厂方法的方法名 -->
-    <bean id="userE" class="xml.ioc.StaticUserFactory" factory-method="getUserEInstance">
+    <bean id="userE" class="xml.ioc.StaticUserFactory" factory-method="getUserInstance">
         <!-- 可以通过 constructor-arg 子节点为静态工厂方法指定参数 -->
         <constructor-arg value="Jion"/>
     </bean>

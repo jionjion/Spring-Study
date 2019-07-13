@@ -2,7 +2,7 @@ package xml.ioc;
 
 /**
  * @author Jion
- *  配置创建一个Bean,交由容器管理
+ * 配置创建一个Bean,交由容器管理
  */
 public class UserA {
 
@@ -13,7 +13,7 @@ public class UserA {
         this.name = name;
     }
 
-    public void Info(){
+    public void Info() {
         System.out.println("这是BeanA!");
     }
 

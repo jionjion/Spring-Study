@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <!-- 使用 Aspect 完成AOP编程 -->
@@ -19,6 +20,8 @@
 
         <!-- 配置切面及切面的执行顺序,各种通知及通知的返回值  -->
         <aop:aspect ref="loggingAspect" order="1">
+            <!-- 也可以在内部定义切点表达式 -->
+            <!-- <aop:pointcut id="" expression=""/> -->
             <!-- 前置通知 -->
             <aop:before method="beforeMethod" pointcut-ref="pointcut"/>
             <!-- 返回通知 -->
@@ -31,5 +34,4 @@
             <aop:around method="aroundMethod" pointcut-ref="pointcut"/>
         </aop:aspect>
     </aop:config>
-
 </beans>

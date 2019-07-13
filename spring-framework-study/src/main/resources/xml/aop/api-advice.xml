@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 通知,创建实现接口的通知类 -->
+    <bean id="beforeAdvice" class="xml.aop.api.CalculatorMethodBeforeAdvice"/>
+    <bean id="returningAdvice" class="xml.aop.api.CalculatorAfterReturningAdvice"/>
+    <bean id="throwsAdvice" class="xml.aop.api.CalculatorThrowsAdvice"/>
+
+    <!-- 切点,方法匹配 -->
+    <bean id="methodPointcut" class="org.springframework.aop.support.NameMatchMethodPointcut">
+        <!-- 匹配的方法名,这里 * 标示全部方法 -->
+<!--        <property name="ClassFilter" value="TRUE"/>-->
+        <property name="mappedNames">
+            <list>
+                <value>div</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- 目标类 -->
+    <bean id="calculator" class="xml.aop.api.CalculatorImpl"/>
+
+    <!-- 织入,将切点与某通知进行织入,一次只能一个 -->
+    <bean id="defaultAdvisor" class="org.springframework.aop.support.DefaultPointcutAdvisor">
+        <property name="advice" ref="beforeAdvice" />
+        <property name="pointcut" ref="methodPointcut" />
+    </bean>
+
+    <!-- 通过Spring的ProxyFactoryBean代理工厂获得一个代理类,在代理类中可以配置多个织入点或者实现通知接口的类 -->
+    <bean id="calculatorProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <!-- 要代理对象 -->
+        <property name="target" ref="calculator"/>
+        <!-- 执行通知的Bean的ID -->
+        <property name="interceptorNames">
+            <list>
+                <value>defaultAdvisor</value>
+                <value>beforeAdvice</value>
+                <value>returningAdvice</value>
+                <value>throwsAdvice</value>
+            </list>
+        </property>
+    </bean>
+</beans>
