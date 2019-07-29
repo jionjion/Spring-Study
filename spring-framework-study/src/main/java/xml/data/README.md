@@ -189,7 +189,7 @@ Xml配置
         <constructor-arg name="jdbcTemplate" ref="jdbcTemplate"/>
     </bean>
 
-    <!-- Service 业务层 -->
+    UserService
     <bean id="service" class="xml.data.jdbcTemplate.Service">
         <property name="dao" ref="dao"/>
     </bean>
@@ -218,7 +218,7 @@ Xml配置
 
     <!-- 3. 配置事务切入点, 以及把事务切入点和事务属性关联起来 -->
     <aop:config>
-        <!-- 切点 执行 xml.data.jdbcTemplate.Service 包下的所有类的所有方法,参数列表不作限制.返回值不作限制 -->
+        UserService
         <aop:pointcut id="txPointCut" expression="execution(* xml.data.jdbcTemplate.Service.*.*(..))"/>
         <!-- 通知,将切点与事物管理器关联 -->
         <aop:advisor advice-ref="txAdvice" pointcut-ref="txPointCut"/>

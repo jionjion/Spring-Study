@@ -6,6 +6,6 @@ package xml.autoWiring;
 public class Service {
 
     public void save(){
-        System.out.println("Service 层保存方法...");
+        System.out.println("UserService 层保存方法...");
     }
 }
